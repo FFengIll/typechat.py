@@ -6,6 +6,7 @@
 
 ## Generated Prompt
 Provide 3 suggestions for specific places to go to in Seattle on a rainy day.
+
 Respond strictly with JSON. The JSON should be compatible with the Python pydantic type Response from the following:
 ```
 class Response(BaseModel):

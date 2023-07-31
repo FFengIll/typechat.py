@@ -2,6 +2,9 @@
 
 A python implement to makes it easy to build natural language interfaces using types.
 
+# Install
+`pip install typechatpy`
+
 # Usage
 see [simple](example/simple).
 
