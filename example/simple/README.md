@@ -1,9 +1,10 @@
 # simple
 
-# prompt
+# config
+## prompt
 `Provide 3 suggestions for specific places to go to in Seattle on a rainy day.`
 
-# output
+# result
 ```json
 {
   "data": [
