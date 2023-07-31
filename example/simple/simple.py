@@ -18,9 +18,10 @@ prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rai
 
 def main():
     t = Translator()
-    fmt = t.process(Response, VenueData)
 
+    fmt = t.process(Response, VenueData)
     res = t.generate(prompt, fmt)
+
     print(res)
 
 
