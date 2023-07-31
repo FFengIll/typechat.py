@@ -1,10 +1,24 @@
-# simple
+# Simple
 
-# config
-## prompt
+# Data
+## Prompt
 `Provide 3 suggestions for specific places to go to in Seattle on a rainy day.`
 
-# result
+## Generated Prompt
+Provide 3 suggestions for specific places to go to in Seattle on a rainy day.
+Respond strictly with JSON. The JSON should be compatible with the Python pydantic type Response from the following:
+```
+class Response(BaseModel):
+    data: List[VenueData]
+
+class VenueData(BaseModel):
+    venue: str
+    description: str
+
+```
+
+# Result
+## GPT-3.5
 ```json
 {
   "data": [
