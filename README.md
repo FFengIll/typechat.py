@@ -1,8 +1,11 @@
-# typechat.py
+# Typechat.py
 
 A python implement to makes it easy to build natural language interfaces using types.
 
-# example
+# Usage
+see [simple](example/simple).
+
+# Example
 see [simple](example/simple) for more detail (the `response` sample as bellow).
 
 ```json
@@ -30,6 +33,6 @@ see [simple](example/simple) for more detail (the `response` sample as bellow).
 - [ ] validator
 - [ ] llm interact
 
-# ref
+# Ref
 - [pydantic](https://github.com/pydantic/pydantic)
 - [typechat](https://github.com/microsoft/TypeChat)
