@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "typechatpy"
+version = "0.1.0"
+description = ""
+authors = ["FFengIll <fengyouzheng@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pydantic = "^2.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+# 国内建议修改源
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
