@@ -4,14 +4,14 @@ from typing import List, Type
 from pydantic import BaseModel
 from pydantic.fields import inspect as pydantic_inspect
 
-template = """{prompt}
+
+class Translator:
+    __template = """{prompt}
 Respond strictly with JSON. The JSON should be compatible with the Python pydantic type Response from the following:
 ```
 {constraint}
 ```"""
 
-
-class Translator:
     def filter_model(self, *vars: List[object]):
         res = []
         for v in vars:
@@ -36,11 +36,21 @@ class Translator:
     def generate(self, prompt, *models: Type[BaseModel]):
         models = self.filter_model(*models)
         constraint = self.to_constraint(*models)
-        res = template.format(prompt=prompt, constraint=constraint)
+        res = self.format(prompt=prompt, constraint=constraint)
+        return res
+
+    def format(self, prompt, constraint):
+        res = self.__template.format(prompt=prompt, constraint=constraint)
         return res
 
 
 class TranslatorLegacy:
+    __template = """{prompt}
+Respond strictly with JSON. The JSON should be compatible with the Python pydantic type Response from the following:
+```
+{constraint}
+```"""
+
     def filter(self, vars: List[object]):
         res = []
         for v in vars:
@@ -63,5 +73,5 @@ class TranslatorLegacy:
         return "\n".join(pending)
 
     def generate(self, prompt, fmt):
-        res = template.format(prompt=prompt, constraint=fmt)
+        res = self.__template.format(prompt=prompt, constraint=fmt)
         return res
