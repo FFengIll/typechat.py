@@ -10,17 +10,15 @@ class RelatedQ(BaseModel):
 
 
 class Response(BaseModel):
-    answer: str
     rq: List[RelatedQ]
 
 
 def main():
     t = Translator()
-    fmt = t.process(Response)
 
     prompt = "Provide `answer` of my question and 3 related question (as `rq`). Question: what is redis?"
 
-    res = t.generate(prompt, fmt)
+    res = t.generate(prompt, Response)
     print(res)
 
 

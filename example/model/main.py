@@ -1,8 +1,8 @@
 import sys
 
-from typechatpy.translator import Translator
-
 from model import *
+
+from typechatpy.translator import Translator
 
 prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rainy day."
 
@@ -10,12 +10,15 @@ prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rai
 def main():
     t = Translator()
 
-    # auto filter values
-    models = t.filter(globals().values())
-    fmt = t.process(*models)
-    print(fmt)
+    # step by step filter values
+    models = t.filter_model(*globals().values())
+    constraint = t.to_constraint(*models)
+    print(constraint)
+    res = t.format(prompt, constraint)
+    print(res)
 
-    res = t.generate(prompt, fmt)
+    # all in one
+    res = t.generate(prompt, *globals().values())
     print(res)
 
 
