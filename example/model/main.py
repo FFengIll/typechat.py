@@ -11,10 +11,10 @@ def main():
     t = Translator()
 
     # step by step filter values
-    models = t.filter_model(*globals().values())
-    constraint = t.to_constraint(*models)
+    models = t._filter_model(*globals().values())
+    constraint = t._to_constraint(*models)
     print(constraint)
-    res = t.format(prompt, constraint)
+    res = t._format(prompt, constraint)
     print(res)
 
     # all in one
