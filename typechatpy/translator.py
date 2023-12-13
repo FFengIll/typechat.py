@@ -1,28 +1,41 @@
 import inspect
 from typing import List, Type
 
+import loguru
 from pydantic import BaseModel
 from pydantic.fields import inspect as pydantic_inspect
 
+log = loguru.logger
+
 
 class Translator:
-    __template = """{prompt}
+    __default_template = """{prompt}
 Respond strictly with JSON. The JSON should be compatible with the Python pydantic type Response from the following:
-```
+```python
 {constraint}
 ```"""
 
-    def filter_model(self, *vars: List[object]):
-        res = []
+    def __init__(self, template=__default_template) -> None:
+        """
+        init with a template or the default
+        """
+        self.template = template
+
+    def _filter_model(self, *vars: List[object]):
+        res = set()
         for v in vars:
             if inspect.isclass(v) and issubclass(v, BaseModel):
                 # ignore `BaseModel` it self
                 if v.__name__ == BaseModel.__name__:
                     continue
-                res.append(v)
-        return res
+                if v in res:
+                    log.warning(
+                        "found duplicated model, check your code: {}", v.__name__
+                    )
+                res.add(v)
+        return list(res)
 
-    def to_constraint(self, *args: Type[BaseModel]):
+    def _to_constraint(self, *args: Type[BaseModel]):
         pending = []
 
         # for given class type
@@ -34,13 +47,17 @@ Respond strictly with JSON. The JSON should be compatible with the Python pydant
         return "\n".join(pending)
 
     def generate(self, prompt, *models: Type[BaseModel]):
-        models = self.filter_model(*models)
-        constraint = self.to_constraint(*models)
-        res = self.format(prompt=prompt, constraint=constraint)
+        """
+        according to the instruction/prompt and related model define,
+        generate typed instruction/prompt
+        """
+        models = self._filter_model(*models)
+        constraint = self._to_constraint(*models)
+        res = self._format(prompt=prompt, constraint=constraint)
         return res
 
-    def format(self, prompt, constraint):
-        res = self.__template.format(prompt=prompt, constraint=constraint)
+    def _format(self, prompt, constraint):
+        res = self.template.format(prompt=prompt, constraint=constraint)
         return res
 
 
