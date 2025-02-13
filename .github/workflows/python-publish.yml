@@ -11,6 +11,9 @@ name: Upload Python Package
 on:
   release:
     types: [published]
+  push:
+    tags:
+      - 'v*'  # 这里使用通配符匹配所有以 "v" 开头的标签
 
 permissions:
   contents: read
