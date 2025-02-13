@@ -6,7 +6,39 @@ A python implement to makes it easy to build natural language interfaces using t
 `pip install typechatpy`
 
 # Usage
-see [simple](example/simple).
+see [simple](example/simple) and more in [example](example).
+
+```python
+from typing import List
+from pydantic import BaseModel
+from typechatpy.translator import Translator
+
+class VenueData(BaseModel):
+    venue: str
+    description: str
+
+class Response(BaseModel):
+    data: List[VenueData]
+
+prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rainy day."
+
+def main():
+    t = Translator()
+
+    # manual set
+    res = t.generate(prompt, Response, VenueData)
+
+    # auto analyse
+    res = t.generate(prompt, auto=True)
+
+    # set from globals
+    res = t.generate(prompt, *globals().values())
+
+    print(res)
+
+if __name__ == "__main__":
+    main()
+```
 
 # Example
 see [simple](example/simple) for more detail (the `response` sample as bellow).
@@ -34,7 +66,7 @@ see [simple](example/simple) for more detail (the `response` sample as bellow).
 # TODO
 - [x] translator
 - [ ] validator
-- [ ] llm interact
+- [ ] ~~llm interact~~
 
 # Ref
 - [pydantic](https://github.com/pydantic/pydantic)
