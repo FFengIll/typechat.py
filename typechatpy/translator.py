@@ -46,12 +46,28 @@ Respond strictly with JSON. The JSON should be compatible with the Python pydant
 
         return "\n".join(pending)
 
-    def generate(self, prompt, *models: Type[BaseModel]):
+    def generate(self, prompt, *models: Type[BaseModel], auto=False):
         """
         according to the instruction/prompt and related model define,
         generate typed instruction/prompt
         """
-        models = self._filter_model(*models)
+        if models:
+            models = self._filter_model(*models)
+
+        elif auto:
+            # auto collect from caller
+
+            # Get the current frame
+            current_frame = inspect.currentframe()
+
+            # Get the caller's frame
+            caller_frame = current_frame.f_back
+
+            # Get the caller's global variables
+            caller_globals = caller_frame.f_globals
+
+            models = list(caller_globals.values())
+
         constraint = self._to_constraint(*models)
         res = self._format(prompt=prompt, constraint=constraint)
         return res
