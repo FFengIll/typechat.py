@@ -1,5 +1,6 @@
-import typechatpy
 from pydantic import BaseModel
+
+import typechatpy
 
 
 def test_translate():

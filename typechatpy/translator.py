@@ -1,8 +1,9 @@
 import inspect
+from typing import List, Type
+
 import loguru
 from pydantic import BaseModel
 from pydantic.fields import inspect as pydantic_inspect
-from typing import List, Type
 
 log = loguru.logger
 
