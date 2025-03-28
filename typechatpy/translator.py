@@ -1,11 +1,18 @@
 import inspect
-from typing import List, Type
-
 import loguru
 from pydantic import BaseModel
 from pydantic.fields import inspect as pydantic_inspect
+from typing import List, Type
 
 log = loguru.logger
+
+
+def translate(prompt, *cls, template=None):
+    # prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rainy day."
+    t = Translator(template=template)
+    # manual set
+    res = t.generate(prompt, *cls)
+    return res
 
 
 class Translator:
@@ -19,7 +26,10 @@ Respond strictly with JSON. The JSON should be compatible with the Python pydant
         """
         init with a template or the default
         """
-        self.template = template
+        if not template:
+            self.template = self.__default_template
+        else:
+            self.template = template
 
     def _filter_model(self, *vars: List[object]):
         res = set()
