@@ -2,7 +2,7 @@ from typing import List
 
 from pydantic import BaseModel
 
-from typechatpy.translator import Translator
+from typechatpy import translate
 
 
 class VenueData(BaseModel):
@@ -18,10 +18,13 @@ prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rai
 
 
 def main():
-    t = Translator()
+    # general method
+    # t = Translator()
+    # res = t.generate(prompt, Response, VenueData)
+    # print(res)
 
-    res = t.generate(prompt, Response, VenueData)
-
+    # simple api
+    res = translate(prompt, Response, VenueData)
     print(res)
 
 

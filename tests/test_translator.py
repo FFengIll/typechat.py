@@ -1,9 +1,21 @@
-from typechatpy import Translator
 from pydantic import BaseModel
 
+import typechatpy
 
-def test_translator():
-    t = Translator()
+
+def test_translate():
+    class Tmp(BaseModel):
+        data: str
+        id: int
+
+    prompt = "Random generate."
+
+    res = typechatpy.translate(prompt, Tmp)
+    print(res)
+
+
+def test_Translator():
+    t = typechatpy.Translator()
 
     class Tmp(BaseModel):
         data: str

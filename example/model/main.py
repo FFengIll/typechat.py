@@ -1,7 +1,3 @@
-import sys
-
-from model import *
-
 from typechatpy.translator import Translator
 
 prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rainy day."

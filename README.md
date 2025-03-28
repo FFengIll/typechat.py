@@ -6,7 +6,34 @@ A python implement to makes it easy to build natural language interfaces using t
 `pip install typechatpy`
 
 # Usage
-see [simple](example/simple) and more in [example](example).
+## Simple
+see [simple](example/simple).
+
+```python
+from typing import List
+from pydantic import BaseModel
+from typechatpy import translate
+
+class VenueData(BaseModel):
+    venue: str
+    description: str
+
+class Response(BaseModel):
+    data: List[VenueData]
+
+prompt = "Provide 3 suggestions for specific places to go to in Seattle on a rainy day."
+
+def main():
+    # you can set template or use the default (json type).
+    res = translate(prompt, Response, VenueData, template=None)
+    print(res)
+
+if __name__ == "__main__":
+    main()
+```
+
+## General
+see more in [example](example).
 
 ```python
 from typing import List
@@ -61,7 +88,6 @@ see [simple](example/simple) for more detail (the `response` sample as bellow).
   ]
 }
 ```
-
 
 # TODO
 - [x] translator
